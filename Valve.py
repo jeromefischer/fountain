@@ -1,5 +1,7 @@
 import RPi.GPIO as GPIO
 
+from Logger import logger
+
 
 class Valve:
 
