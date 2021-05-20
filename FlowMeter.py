@@ -24,10 +24,11 @@ class FlowMeter:
 
     def count_pulse(self, channel):
         global count
-        global start_counter
-        if start_counter:
-            count = count+1
-            flow = count / 6  # pulse frequency = 6*Q, Q is the flow rate in L/min
-            logger("Flow {}: {} Liter/min".format(self.name, flow))
-            count = 0
+        count = count+1
+
+    def get_flow_rate(self):
+        global count
+        flow = count / 6  # pulse frequency = 6*Q, Q is the flow rate in L/min
+        logger("Flow {}: {} Liter/min".format(self.name, flow))
+        count = 0
 

@@ -36,10 +36,8 @@ if __name__ == '__main__':
 
     while True:
         try:
-            global start_counter
-            start_counter = 1
+            f1.get_flow_rate()
             time.sleep(1)
-            start_counter = 0
 
         except KeyboardInterrupt:
             GPIO.cleanup()
