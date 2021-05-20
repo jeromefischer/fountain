@@ -23,21 +23,10 @@ class FlowMeter:
 
     def count_pulse(self, channel):
         global count
+        global start_counter
         if start_counter:
             count = count+1
             flow = count / 6  # pulse frequency = 6*Q, Q is the flow rate in L/min
             logger("Flow {}: {} Liter/min".format(self.name, flow))
-            time.sleep(1)
             count = 0
 
-
-while True:
-    try:
-        start_counter = 1
-        time.sleep(1)
-        start_counter = 0
-        count = 0
-    except KeyboardInterrupt:
-        print('\ncaught keyboard interrupt!, bye')
-        GPIO.cleanup()
-        sys.exit()

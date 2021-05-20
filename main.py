@@ -14,6 +14,7 @@ from Valve import Valve
 
 GPIO_VALVE = 23
 
+start_counter = 0
 
 if __name__ == '__main__':
 
@@ -27,16 +28,19 @@ if __name__ == '__main__':
     f1 = FlowMeter(pin=5, name='circulating')
     GPIO.add_event_detect(f1.pin, GPIO.FALLING, callback=f1.count_pulse)
 
-    try:
-        v1.set_valve_on()
-        start_counter = 1
-        time.sleep(1)
-        start_counter = 0
-        v1.set_valve_off()
-        time.sleep(1)
-        GPIO.cleanup()
-    except KeyboardInterrupt:
-        GPIO.cleanup()
+    v1.set_valve_on()
+    time.sleep(1)
+    v1.set_valve_off()
+
+    while True:
+        try:
+            global start_counter
+            start_counter = 1
+            time.sleep(1)
+            start_counter = 0
+
+        except KeyboardInterrupt:
+            GPIO.cleanup()
 
 
 
