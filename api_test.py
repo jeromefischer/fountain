@@ -1,6 +1,7 @@
 import flask
 from flask import jsonify, request
 
+from FlowMeter import FlowMeter
 from TemperatureSensor import TemperatureSensor
 
 app = flask.Flask(__name__)
@@ -20,6 +21,16 @@ def home():
     return "<h1>Distant Reading Archive</h1>" \
            "<p>This site is a prototype API for distant reading of science fiction novels.</p>"
 
+@app.route('/api/v1/resource/valve/post_on', methods=['POST'])
+def api_set_valve_on():
+    pass
+
+@app.route('/api/v1/resource/valve/post_off', methods=['POST'])
+def api_set_valve_off():
+    pass
+
+def api_get_valve_status():
+    pass
 
 # A route to return all of the available entries in our catalog.
 @app.route('/api/v1/resources/temperature/all', methods=['GET'])

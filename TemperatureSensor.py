@@ -17,5 +17,5 @@ class TemperatureSensor:
         temp_in_celsius = 0
         if temp_reading_as_string != -1:
             temp_data = lines[1][temp_reading_as_string + 2:]
-            temp = float(temp_data) / 1000.0
+            temp_in_celsius = float(temp_data) / 1000.0
         return temp_in_celsius

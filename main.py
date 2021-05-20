@@ -5,34 +5,13 @@ from logging.handlers import RotatingFileHandler
 import RPi.GPIO as GPIO
 import time
 import logging
+
+from Logger import logger
 from TemperatureSensor import TemperatureSensor
+from Valve import Valve
 
-log_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logFile = 'fountain.log'
-my_handler = RotatingFileHandler(logFile, mode='a', maxBytes=50*1024*1024,
-                                 backupCount=2, encoding=None, delay=0)
-my_handler.setFormatter(log_formatter)
-my_handler.setLevel(logging.INFO)
-
-logger = logging.getLogger('Fountain Logger')
-logger.setLevel(logging.INFO)
-logger.addHandler(my_handler)
 
 GPIO_VALVE = 2
-
-# GPIO setup
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(GPIO_VALVE, GPIO.OUT)
-
-
-def valve_on(pin):
-    GPIO.output(pin, GPIO.HIGH)  # Turn motor on
-    logger.info('valve switched on')
-
-
-def valve_off(pin):
-    GPIO.output(pin, GPIO.LOW)  # Turn motor off
-    logger.info('valve switched off')
 
 
 if __name__ == '__main__':
@@ -42,9 +21,10 @@ if __name__ == '__main__':
     logger.info('Temperature: {0}'.format(temperature))
 
     try:
-        valve_on(GPIO_VALVE)
+        v1 = Valve(pin=GPIO_VALVE)
+        v1.set_valve_on()
         time.sleep(1)
-        valve_off(GPIO_VALVE)
+        v1.set_valve_off()
         time.sleep(1)
         GPIO.cleanup()
     except KeyboardInterrupt:
