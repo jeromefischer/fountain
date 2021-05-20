@@ -18,6 +18,7 @@ class FlowMeter:
         self.init_gpio()
 
     def init_gpio(self):
+        logger.info('initialize: {} pin: {}'.format(self.name, self.pin))
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
