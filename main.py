@@ -6,6 +6,7 @@ import RPi.GPIO as GPIO
 import time
 import logging
 
+from FlowMeter import FlowMeter
 from Logger import logger
 from TemperatureSensor import TemperatureSensor
 from Valve import Valve
@@ -23,9 +24,14 @@ if __name__ == '__main__':
     temperature = t1.read_temp()['sensor_measurement']
     logger.info('{} measured temperature: {} °C'.format(t1.location, temperature))
 
+    f1 = FlowMeter(pin=5, name='circulating')
+    GPIO.add_event_detect(f1.pin, GPIO.FALLING, callback=f1.count_pulse)
+
     try:
         v1.set_valve_on()
+        start_counter = 1
         time.sleep(1)
+        start_counter = 0
         v1.set_valve_off()
         time.sleep(1)
         GPIO.cleanup()
