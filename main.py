@@ -11,7 +11,7 @@ from TemperatureSensor import TemperatureSensor
 from Valve import Valve
 
 
-GPIO_VALVE = 2
+GPIO_VALVE = 23
 
 
 if __name__ == '__main__':

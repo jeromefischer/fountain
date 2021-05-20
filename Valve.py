@@ -18,10 +18,12 @@ class Valve:
         pass
 
     def set_valve_on(self):
+        GPIO.output(self.pin, GPIO.LOW)  # Turn valve off
         logger.info('valve switched on')
         pass
 
     def set_valve_off(self):
+        GPIO.output(self.pin, GPIO.HIGH)  # Turn valve on
         logger.info('valve switched on')
         pass
 
