@@ -5,13 +5,13 @@ import sys
 
 from Logger import logger
 
+flow = 0
+count = 0
+
 
 class FlowMeter:
-    flow = 0
-    count = 0
 
     def __init__(self, pin, name):
-
         self.pin = pin
         self.name = name
 
@@ -24,11 +24,13 @@ class FlowMeter:
 
     def count_pulse(self, channel):
         global count
-        count = count+1
+        count = count + 1
 
     def get_flow_rate(self):
         global count
+        print(count)
         flow = count / 6  # pulse frequency = 6*Q, Q is the flow rate in L/min
-        logger("Flow {}: {} Liter/min".format(self.name, flow))
+        logger.info("Flow {}: {} Liter/min".format(self.name, flow))
         count = 0
+
 
