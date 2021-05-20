@@ -16,12 +16,14 @@ GPIO_VALVE = 2
 
 if __name__ == '__main__':
 
-    TS = TemperatureSensor(sensor_type='DS18B20', sensor_name='/sys/bus/w1/devices/28-01131a6b6e1c/w1_slave')
-    temperature = TS.read_temp()
-    logger.info('Temperature: {0}'.format(temperature))
+    logger.info('started...')
+
+    v1 = Valve(pin=GPIO_VALVE)
+    t1 = TemperatureSensor(location='water', sensor_type='DS18B20', sensor_name='/sys/bus/w1/devices/28-01131a6b6e1c/w1_slave')
+    temperature = t1.read_temp()['sensor_measurement']
+    logger.info('{} measured temperature: {} °C'.format(t1.location, temperature))
 
     try:
-        v1 = Valve(pin=GPIO_VALVE)
         v1.set_valve_on()
         time.sleep(1)
         v1.set_valve_off()
