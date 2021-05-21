@@ -9,9 +9,9 @@ app.config["DEBUG"] = True
 
 # Create some test data for our catalog in the form of a list of dictionaries.
 sensors = [
-    {'id': 0,
+    {'sensor_location': 'water',
      'temeraure': 18.2},
-    {'id': 1,
+    {'sensor_location': 'cubicle',
      'temeraure': 19.2}
 ]
 
@@ -35,7 +35,7 @@ def api_get_valve_status():
 # A route to return all of the available entries in our catalog.
 @app.route('/api/v1/resources/temperature/all', methods=['GET'])
 def api_all():
-    TS = TemperatureSensor(sensor_type='DS18B20', sensor_name='/sys/bus/w1/devices/28-01131a6b6e1c/w1_slave')
+    TS = TemperatureSensor(location='water', sensor_type='DS18B20', sensor_name='/sys/bus/w1/devices/28-01131a6b6e1c/w1_slave')
     return jsonify(TS.read_temp())
 
 
@@ -44,10 +44,10 @@ def api_id():
     # Check if an ID was provided as part of the URL.
     # If ID is provided, assign it to a variable.
     # If no ID is provided, display an error in the browser.
-    if 'id' in request.args:
-        id = int(request.args['id'])
+    if 'sensor_location' in request.args:
+        location = request.args['sensor_location']
     else:
-        return "Error: No id field provided. Please specify an id."
+        return "Error: No location field provided. Please specify a location."
 
     # Create an empty list for our results
     results = []
@@ -55,7 +55,7 @@ def api_id():
     # Loop through the data and match results that fit the requested ID.
     # IDs are unique, but other fields might return many results
     for s in sensors:
-        if s['id'] == id:
+        if s['sensor_location'] == location:
             results.append(s)
 
     # Use the jsonify function from Flask to convert our list of
@@ -63,4 +63,4 @@ def api_id():
     return jsonify(results)
 
 
-app.run()
+app.run(host='192.168.2.11')
